@@ -1,0 +1,25 @@
+<div class="container">
+	<!-- TODO Fix elements spacing/padding/margin -->
+	<div class="error-message" ng-messages="status">
+		<ng-message when="hasError">Something went wrong.<br>{{ error }}</ng-message>
+	</div>
+
+	<div class="dialog">
+		<div class="header">
+			<h2>Login to Betfair</h2>
+		</div>
+		<div class="content">
+			<form id="loginForm" name="loginForm" ng-submit="login(loginForm.$valid)" ng-show="!showLoading" novalidate>
+				<input type="text" placeholder="Username" ng-model="inputLogin" required>
+				<input type="password" placeholder="Password" ng-model="inputPassword" required>
+				<input type="text" placeholder="Application Key" ng-model="inputAppKey" required>
+				<button type="submit" ng-disabled="loginForm.$invalid">Login</button>
+			</form>
+
+			<div ng-show="showLoading" class="progress-bar stripes indeterminate">
+				<span></span>
+			</div>
+		</div>
+	</div>
+	<a target="_blank" href="https://api.developer.betfair.com/services/webapps/docs/x/PYAS"><span class="discrete">What is an Application Key?</span></a>
+</div>

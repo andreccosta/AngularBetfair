@@ -1,0 +1,120 @@
+<nav>
+	<div class="navbar-section">
+		<div class="header">
+			<h1>AngularBetfair</h1>
+		</div>
+		<div class="navbar-header-login content">
+			<span id="login">{{ user.login }}</span>
+			<span id="balance">{{ (user.balance | number :  2) + " €"}}</span>
+			<button id="logout" ng-click="logout()">Logout</button>
+		</div>
+	</div>
+	<div class="navbar-section">
+		<div class="header toggle">
+			<h2>Market Navigation</h2>
+		</div>
+		<div class="content">
+			<ul>
+				<li ng-repeat="market in markets">
+					<a href="#/ladder/{{market.marketId}}">
+					{{ (market.marketStartTime | date : 'HH:mm') + " " + market.event.venue + " " + market.marketName }}
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="navbar-section">
+		<div class="header toggle">
+			<h2>Matched Bets</h2>
+		</div>
+		<div class="content hide">
+		</div>
+	</div>
+	<div class="navbar-section">
+		<div class="header toggle">
+			<h2>Unmatched Bets</h2>
+		</div>
+		<div class="content hide">
+		</div>
+	</div>
+</nav>
+
+<div class="container" id="main">
+	<div class="market-info">
+		<p class="market-name">
+			{{ (currentMarket.marketStartTime | date : 'HH:mm') + " " + currentMarket.event.venue + " " + currentMarket.marketName }}
+		</p>
+		<p class="small">
+			{{ currentMarket.marketStartTime | date }}
+		</p>
+		<p>{{ (currentMarket.totalMatched | number :  2) + " €" }}</p>
+	</div>
+	<div class="market-info">
+		<p class="small">
+			{{ currentMarket.numberOfRunners - currentMarket.numberOfActiveRunners }} Non-runners 
+		</p>
+		<p class="small">{{ currentMarket.status }}</p>
+	</div>
+
+	<div class="ladder-container">
+		<div class="ladder" ng-repeat="runner in currentMarket.runners | filter:{status: 'ACTIVE'}">
+			<div class="ladder-header">
+				<div class="ladder-header-silk">
+					<img ng-src="http://content-cache.betfair.com/feeds_images/Horses/SilkColours/{{runner.metadata.COLOURS_FILENAME}}" />
+				</div>
+				<div class="ladder-header-info">
+					{{runner.runnerName}}
+				</div>
+			</div>
+
+			<table>
+				<tbody>
+				<tr ng-repeat="backPrice in runner.ex.availableToLay.slice().reverse()">
+					<td class="lay"></td><td>{{ backPrice.price }}</td><td class="back active">{{ backPrice.size }}</td>
+				</tr>
+				<tr ng-repeat="layPrice in runner.ex.availableToBack">
+					<td class="lay active">{{ layPrice.size }}</td><td>{{ layPrice.price }}</td><td class="back"></td>
+				</tr>
+
+				<!--
+					<tr><td class="lay"></td><td>3.7</td><td class="back">0</td></tr>
+					<tr><td class="lay"></td><td>3.6</td><td class="back">0</td></tr>
+					<tr><td class="lay"></td><td>3.5</td><td class="back">0</td></tr>
+					<tr><td class="lay"></td><td>3.4</td><td class="back">0</td></tr>
+					<tr><td class="lay"></td><td>3.3</td><td class="back">0</td></tr>
+					<tr><td class="lay"></td><td>3.2</td><td class="back">0</td></tr>
+					<tr><td class="lay"></td><td>3.1</td><td class="back">0</td></tr>
+					<tr><td class="lay"></td><td>3</td><td class="back">0</td></tr>
+					<tr><td class="lay"></td><td>2.9</td><td class="back">0</td></tr>
+					<tr><td class="lay"></td><td>2.8</td><td class="back">0</td></tr>
+					<tr><td class="lay"></td><td>2.7</td><td class="back">0</td></tr>
+					<tr><td class="lay"></td><td>2.6</td><td class="back">0</td></tr>
+					<tr><td class="lay"></td><td>2.5</td><td class="back">0</td></tr>
+					<tr><td class="lay"></td><td>2.4</td><td class="back">0</td></tr>
+					<tr><td class="lay"></td><td>2.3</td><td class="back">0</td></tr>
+					<tr><td class="lay"></td><td>2.2</td><td class="back">0</td></tr>
+					<tr><td class="lay"></td><td>2.1</td><td class="back">0</td></tr>
+					<tr><td class="lay"></td><td>2</td><td class="back">0</td></tr>
+					<tr><td class="lay"></td><td>1.9</td><td class="back">0</td></tr>
+					<tr><td class="lay"></td><td>1.8</td><td class="back">0</td></tr>
+					<tr><td class="lay"></td><td>1.7</td><td class="back">0</td></tr>
+					<tr><td class="lay"></td><td>1.6</td><td class="back">0</td></tr>
+					<tr><td class="lay"></td><td>1.5</td><td class="back">0</td></tr>
+					<tr><td class="lay"></td><td>1.4</td><td class="back">0</td></tr>
+					<tr><td class="lay"></td><td>1.3</td><td class="back">0</td></tr>
+					<tr><td class="lay"></td><td>1.2</td><td class="back">0</td></tr>
+					<tr><td class="lay"></td><td>1.1</td><td class="back"></td></tr>
+					<tr><td class="lay">0</td><td>1.09</td><td class="back"></td></tr>
+					<tr><td class="lay">0</td><td>1.08</td><td class="back"></td></tr>
+					<tr><td class="lay">0</td><td>1.07</td><td class="back"></td></tr>
+					<tr><td class="lay">0</td><td>1.06</td><td class="back"></td></tr>
+					<tr><td class="lay">0</td><td>1.05</td><td class="back"></td></tr>
+					<tr><td class="lay">0</td><td>1.04</td><td class="back"></td></tr>
+					<tr><td class="lay">0</td><td>1.03</td><td class="back"></td></tr>
+					<tr><td class="lay">0</td><td>1.02</td><td class="back"></td></tr>
+					<tr><td class="lay">0</td><td>1.01</td><td class="back"></td></tr> -->
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

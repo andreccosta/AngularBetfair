@@ -1,3 +1,4 @@
+/* Reset */
 * {
 	margin: 0;
 	padding: 0;
@@ -6,6 +7,7 @@
 	box-sizing: border-box;
 }
 
+/* Globals */
 html, body {
 	color: #eee;
 	background-color: #333;
@@ -17,8 +19,6 @@ html, body {
 	text-align: center;
 	overflow: hidden;
 }
-
-/* global */
 
 a {
 	color: inherit;
@@ -188,7 +188,16 @@ button#logout {
 	padding: 5px 10px;
 }
 
-/* Login */
+/* Common */
+.row {
+	width: 100%;
+}
+
+.hide {
+	display: none;
+}
+
+/* Login view */
 .error-message {
 	display: block;
 	margin: 20px auto;
@@ -206,16 +215,7 @@ button#logout {
 	color: #ccc;
 }
 
-/* Common */
-.row {
-	width: 100%;
-}
-
-.hide {
-	display: none;
-}
-
-/* sections */
+/* Ladder view */
 nav {
 	float: left;
 	width: 300px;
@@ -282,32 +282,6 @@ nav {
 
 .toggle {
 	cursor: pointer;
-}
-
-.fade {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 100%;
-    opacity: 1;
-}
-.fade.ng-enter,
-.fade.ng-leave {
-    -webkit-transition: all 0.5s ease;
-    transition: all 0.5s ease;
-}
-.fade.ng-enter {
-    opacity: 0;
-}
-.fade.ng-enter-active {
-    opacity: 1;
-}
-.fade.ng-leave {
-    opacity: 1;
-}
-.fade.ng-leave-active {
-    opacity: 0;
 }
 
 .market-info {
@@ -399,6 +373,33 @@ nav {
 #main {
 	width: auto;
 	margin-left: 300px;
+}
+
+/* NG-Animate */
+.fade {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    opacity: 1;
+}
+.fade.ng-enter,
+.fade.ng-leave {
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+.fade.ng-enter {
+    opacity: 0;
+}
+.fade.ng-enter-active {
+    opacity: 1;
+}
+.fade.ng-leave {
+    opacity: 1;
+}
+.fade.ng-leave-active {
+    opacity: 0;
 }
 
 /* Dialog */
